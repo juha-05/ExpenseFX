@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
-import UI.main.MainActivity;
+import com.example.exchangefx.ui.main.MainActivity;
 import R;
 public class SplashActivity extends AppCompatActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {

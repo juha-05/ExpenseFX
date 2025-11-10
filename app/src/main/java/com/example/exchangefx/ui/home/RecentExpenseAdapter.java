@@ -1,4 +1,4 @@
-package UI.home;
+package com.example.exchangefx.ui.home;
 
 import android.view.*;
 import android.widget.TextView;

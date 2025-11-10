@@ -1,4 +1,4 @@
-package UI.expense;
+package com.example.exchangefx.ui.expense;
 
 import android.os.Bundle;
 import android.view.*;

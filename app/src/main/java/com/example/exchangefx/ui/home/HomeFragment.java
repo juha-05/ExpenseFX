@@ -1,4 +1,4 @@
-package UI.home;
+package com.example.exchangefx.ui.home;
 
 import android.os.Bundle;
 import android.view.*;
@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.exchangefx.R;
-import UI.expense.ExpenseList;
-import UI.home.dummy.HomeDummy;
-import UI.main.MainActivity;
+import com.example.exchangefx.ui.expense.ExpenseList;
+import com.example.exchangefx.ui.home.dummy.HomeDummy;
+import com.example.exchangefx.ui.main.MainActivity;
 
 public class HomeFragment extends Fragment {
 
