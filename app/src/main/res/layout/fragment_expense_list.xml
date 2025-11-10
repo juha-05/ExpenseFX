@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 상단 AppBar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent" android:layout_height="56dp"
+        app:navigationIcon="@android:drawable/ic_media_previous"
+        app:title="지출 내역"/>
+
+    <!-- 통화/월 선택 + 총액 -->
+    <LinearLayout
+        android:orientation="vertical" android:padding="16dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="space_between" android:orientation="horizontal">
+            <Spinner
+                android:id="@+id/sp_currency" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"/>
+            <Spinner
+                android:id="@+id/sp_month" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_marginStart="12dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_month_total"
+            android:text="₩ 1,234,000" android:textStyle="bold"
+            android:textSize="28sp" android:layout_marginTop="8dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center"
+            android:layout_marginTop="8dp">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_today"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:text="오늘환율" android:layout_marginEnd="8dp"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_at_time"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:text="지출 시점 환율"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 리스트 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_list"
+        android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>

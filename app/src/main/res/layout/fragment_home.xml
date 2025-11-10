@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:text="로고/앱 이름"
+                android:textSize="20sp" android:textStyle="bold"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+            <!-- 총 지출 카드 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_month_total"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="12dp" app:cardCornerRadius="10dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:text="이번 달 총 지출"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/tv_month_total"
+                        android:text="₩ 1,234,000"
+                        android:textSize="28sp" android:textStyle="bold"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView
+                        android:text="환율 기준 :  ○ 오늘   ● 지출 시점"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 오늘 날짜 섹션 타이틀 -->
+            <TextView
+                android:id="@+id/tv_section_date"
+                android:text="2025. 11. 04"
+                android:textStyle="bold" android:layout_marginTop="16dp"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+            <!-- 최근 지출 목록 -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_recent"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:contentDescription="Quick 지출"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/primary_blue"
+        android:layout_gravity="bottom|end" android:layout_margin="16dp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
