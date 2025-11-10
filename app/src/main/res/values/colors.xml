@@ -1,6 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary_blue">#0077B6</color>
-    <color name="accent_yellow">#FFC300</color>
-    <color name="splash_bg">#FFF9F9F9</color>
+    <!-- 기본 앱 테마 색상 -->
+    <color name="blue">#1976D2</color> <!-- 진한 파란색 (Material Blue 700) -->
+    <color name="blue_light">#2196F3</color> <!-- 일반 파란색 (Material Blue 500) -->
+    <color name="blue_dark">#0D47A1</color> <!-- 어두운 파란색 -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray_light">#F5F5F5</color>
 </resources>
