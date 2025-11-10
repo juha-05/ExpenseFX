@@ -1,9 +1,9 @@
-package UI.main;
+package com.example.exchangefx.ui.main;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import UI.home.HomeFragment;
+import com.example.exchangefx.ui.home.HomeFragment;
 import com.example.exchangefx.R;
 
 public class MainActivity extends AppCompatActivity {
