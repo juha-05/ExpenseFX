@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FAFAFA"
+    android:padding="16dp"
+    tools:context=".ui.settings.Settings">
+
+    <!-- 상단 제목 -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:text="더보기"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#B0B0B0"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 환율 캐시 삭제 -->
+    <TextView
+        android:id="@+id/tvClearCache"
+        android:text="환율 캐시 삭제"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:background="@drawable/edittext_white"
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />
+
+    <!-- 백업/복원 -->
+    <TextView
+        android:id="@+id/tvBackupRestore"
+        android:text="백업/복원"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:background="@drawable/edittext_white"
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />
+
+    <!-- 버전 + 제작자 -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/edittext_white"
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:text="Version 1.0.0"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="정승우, 이주하"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- 여백 박스 -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/blackborder_whitebg"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <TextView
+            android:text="더 추가할 내용"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
