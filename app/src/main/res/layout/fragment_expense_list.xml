@@ -16,13 +16,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <!-- 뒤로 가기 버튼 (<) -->
-        <ImageButton
+        <Button
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_back_arrow"
+            android:text="<"
             android:contentDescription="뒤로 가기"
+            android:textColor="#000000"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -56,8 +57,7 @@
             android:background="?attr/selectableItemBackground"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -160,7 +160,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/list_item_expense_detail" />
+        tools:listitem="@layout/item_expense_row" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
     <!-- ic_back_arrow 아이콘은 res/drawable에 추가 필요 -->
