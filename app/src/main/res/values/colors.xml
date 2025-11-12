@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <color name="primary_blue">#0077B6</color>
-    <color name="accent_yellow">#FFC300</color>
-    <color name="splash_bg">#FFF9F9F9</color>
+    <color name="bg">#F3F3F3</color>
+    <color name="sub_text">#737373</color>
+    <color name="point_blue">#2266BB</color>
+    <color name="point_red">#D93636</color>
+    <color name="black">#000000</color>
 </resources>

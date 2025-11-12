@@ -19,7 +19,7 @@ public class ExpenseList extends Fragment {
         View v = inf.inflate(R.layout.fragment_expense_list, parent, false);
 
         // 툴바 뒤로가기
-        v.findViewById(R.id.toolbar).setOnClickListener(x -> requireActivity().onBackPressed());
+        v.findViewById(R.id.BtnHome).setOnClickListener(x -> requireActivity().onBackPressed());
 
         // 스피너 샘플
         Spinner spCurrency = v.findViewById(R.id.sp_currency);

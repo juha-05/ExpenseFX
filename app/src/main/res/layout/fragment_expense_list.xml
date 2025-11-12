@@ -5,12 +5,19 @@
     android:layout_height="match_parent">
 
     <!-- 상단 AppBar -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent" android:layout_height="56dp"
-        app:navigationIcon="@android:drawable/ic_media_previous"
-        app:title="지출 내역"/>
-
+    <Button
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/BtnHome"
+        android:text="<"
+        android:background="@color/bg" />
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:text="지출 내역"/>
     <!-- 통화/월 선택 + 총액 -->
     <LinearLayout
         android:orientation="vertical" android:padding="16dp"
