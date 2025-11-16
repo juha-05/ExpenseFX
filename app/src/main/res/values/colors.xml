@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <color name="bg">#F3F3F3</color>
+    <color name="bg">#FAFAFA</color>
     <color name="sub_text">#737373</color>
     <color name="point_blue">#2266BB</color>
     <color name="point_red">#D93636</color>

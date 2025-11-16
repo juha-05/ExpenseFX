@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:text="오늘환율"
                 android:textColor="@android:color/white"
-                android:backgroundTint="#007AFF"
+                android:backgroundTint="@color/point_blue"
                 android:layout_marginEnd="8dp"
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
 

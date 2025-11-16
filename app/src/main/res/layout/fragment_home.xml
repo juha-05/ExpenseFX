@@ -9,16 +9,15 @@
     tools:context=".ui.home.HomeFragment">
 
     <!-- 상단: 로고/앱 이름 -->
-    <TextView
-        android:id="@+id/tv_app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_bar_title"
-        android:textStyle="bold"
-        android:textSize="20sp"
+    <ImageView
+        android:id="@+id/homelogo"
+        android:src="@drawable/logo"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
         android:layout_margin="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+
 
     <!-- 이번 달 총 지출 카드 (+ 우측 > 표시) -->
     <androidx.cardview.widget.CardView
@@ -29,7 +28,7 @@
         android:layout_marginTop="8dp"
         app:cardUseCompatPadding="true"
         app:cardElevation="2dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_app_name"
+        app:layout_constraintTop_toBottomOf="@id/homelogo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
