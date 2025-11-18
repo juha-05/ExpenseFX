@@ -1,0 +1,17 @@
+<resources>
+    <string-array name="currency_array">
+        <item>USD</item>
+        <item>KRW</item>
+        <item>JPY</item>
+        <item>EUR</item>
+        <item>CNY</item>
+    </string-array>
+
+    <string-array name="category_array">
+        <item>식비</item>
+        <item>교통</item>
+        <item>쇼핑</item>
+        <item>숙소</item>
+        <item>기타</item>
+    </string-array>
+</resources>

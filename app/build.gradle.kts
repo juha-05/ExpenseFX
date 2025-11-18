@@ -33,8 +33,11 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+
+    // okhttp3
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
     // ===== Room (SQLite ORM) 추가 =====
     val roomVersion = "2.6.1"
