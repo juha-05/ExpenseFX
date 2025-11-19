@@ -31,6 +31,12 @@
             android:name=".ui.expense.ExpenseEditNav"
             android:exported="true" />
 
+        <activity android:name=".ui.settings.Settings" />
+
+        <activity
+            android:name=".ui.chart.ChartsNav"
+            android:exported="true" />
+
 
     </application>
 

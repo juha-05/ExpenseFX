@@ -70,11 +70,21 @@ public class ExpenseAddFragment extends Fragment {
         // ===================== 날짜 클릭 → 달력 열기 =====================
         tvDate.setOnClickListener(view -> showDatePicker());
 
-        // ===================== 뒤로가기 =====================
+        // -------------------- 뒤로가기 처리 (MainActivity / ExpenseEditNav 둘 다 지원) --------------------
         Button btnBack = v.findViewById(R.id.btnBack);
         if (btnBack != null) {
-            btnBack.setOnClickListener(view ->
-                    ((ExpenseEditNav) requireActivity()).showExpenseList());
+            btnBack.setOnClickListener(view -> {
+
+                if (requireActivity() instanceof ExpenseEditNav) {
+                    // 3장 Flow: 목록 화면으로
+                    ((ExpenseEditNav) requireActivity()).showExpenseList();
+                } else {
+                    // 홈 → + → 직접 진입 Flow: Fragment 백스택 팝
+                    requireActivity()
+                            .getSupportFragmentManager()
+                            .popBackStack();
+                }
+            });
         }
 
         // ===================== 저장 버튼 =====================

@@ -41,69 +41,69 @@
                 android:id="@+id/tv_month_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:text="@string/label_this_month_total"
                 android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:layout_alignParentStart="true"/>
+                android:textSize="16sp" />
 
             <!-- 우측 꺾쇠(>), 아이콘 리소스 없이 텍스트로 -->
             <TextView
                 android:id="@+id/tv_chevron"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tv_month_title"
+                android:layout_alignParentEnd="true"
                 android:text="&gt;"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_alignParentEnd="true"
-                android:layout_alignTop="@id/tv_month_title"/>
+                android:textStyle="bold" />
 
             <!-- 큰 금액 -->
             <TextView
                 android:id="@+id/tv_total_expense_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="₩ 1,234,000"
-                android:textStyle="bold"
-                android:textSize="28sp"
                 android:layout_below="@id/tv_month_title"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp"
+                android:text="₩ 1,234,000"
+                android:textSize="28sp"
+                android:textStyle="bold" />
 
             <!-- 환율 기준 토글 (라디오 점) -->
             <LinearLayout
                 android:id="@+id/layout_fx_basis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_below="@id/tv_total_expense_amount"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/label_fx_basis"
-                    android:textColor="@color/sub_text"/>
+                    android:textColor="@color/sub_text" />
 
                 <RadioGroup
                     android:id="@+id/rg_fx_basis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="8dp">
+                    android:layout_marginStart="8dp"
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/rb_today"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/fx_today"
                         android:button="@drawable/radio_dot_selector"
-                        android:paddingEnd="8dp"/>
+                        android:paddingEnd="8dp"
+                        android:text="@string/fx_today" />
 
                     <RadioButton
                         android:id="@+id/rb_at_spend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/fx_at_spend"
-                        android:button="@drawable/radio_dot_selector"/>
+                        android:button="@drawable/radio_dot_selector"
+                        android:text="@string/fx_at_spend" />
                 </RadioGroup>
             </LinearLayout>
 
