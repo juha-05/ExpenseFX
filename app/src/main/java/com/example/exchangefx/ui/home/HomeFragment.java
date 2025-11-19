@@ -33,31 +33,28 @@ public class HomeFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // ------------------------------
+
         // 1) 최근 지출 RecyclerView 설정
-        // ------------------------------
+
         RecyclerView rvRecent = v.findViewById(R.id.recycler_recent);
         rvRecent.setLayoutManager(new LinearLayoutManager(requireContext()));
         rvRecent.setAdapter(new RecentExpenseAdapter(HomeDummy.recentNames()));
 
-        // ------------------------------------------
+
         // 2) "이번 달 총 지출" 카드 → 지출 내역 Fragment 이동
-        // ------------------------------------------
         v.findViewById(R.id.card_month_total).setOnClickListener(view -> {
             if (requireActivity() instanceof MainActivity) {
                 ((MainActivity) requireActivity()).replace(new ExpenseList(), true);
             }
         });
 
-        // ------------------------------
+
         // 3) 날짜 섹션 더미 텍스트
-        // ------------------------------
         TextView tvSectionDate = v.findViewById(R.id.tv_section_date);
         tvSectionDate.setText("2025. 11. 04");
 
-        // ------------------------------
-        // 4) FAB (+ 버튼) → 바로 ExpenseAddFragment 로 이동
-        // ------------------------------
+
+        // 4) (+ 버튼) → ExpenseAddFragment 로 이동
         v.findViewById(R.id.fab_quick_add).setOnClickListener(btn -> {
             if (requireActivity() instanceof MainActivity) {
                 ((MainActivity) requireActivity())
@@ -65,9 +62,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // ------------------------------
+
         // 5) BottomNavigation → Activity 연결
-        // ------------------------------
         BottomNavigationView bottomNav = v.findViewById(R.id.bottom_navigation);
 
         bottomNav.setOnItemSelectedListener(item -> {
