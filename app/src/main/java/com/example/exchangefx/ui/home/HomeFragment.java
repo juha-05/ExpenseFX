@@ -105,7 +105,7 @@ public class HomeFragment extends Fragment {
         expenseDao   = AppDatabase.getInstance(requireContext()).expenseDao();
         fxRateClient = new FrankfurterCall();
 
-        // 2번: "2025.11.04" 부분을 오늘 날짜로 표시
+        // 오늘 날짜로 표시
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd", Locale.KOREA);
         String todayStr = sdf.format(new Date());
         tvSectionDate.setText(todayStr);
@@ -132,7 +132,7 @@ public class HomeFragment extends Fragment {
         // 기본값: 오늘 기준
         rbToday.setChecked(true);
 
-        // 4번: FAB → 지출 추가 화면으로
+        // FAB → 지출 추가 화면으로
         fabQuickAdd.setOnClickListener(view -> {
             Intent intent = new Intent(requireActivity(), ExpenseEditNav.class);
             intent.putExtra(ExpenseEditNav.EXTRA_OPEN_ADD, true);
