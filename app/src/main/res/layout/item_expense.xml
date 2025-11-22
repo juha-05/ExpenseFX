@@ -8,7 +8,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!-- 체크박스 (왼쪽) -->
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
@@ -16,20 +15,17 @@
         android:buttonTint="@color/black"
         android:layout_marginEnd="8dp" />
 
-    <!-- 메인 내용 (오른쪽 전체) -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- 첫 줄: 항목 이름 / 금액 -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
-            <!-- 항목 이름 -->
             <TextView
                 android:id="@+id/txtName"
                 android:text="지출 항목"
@@ -40,7 +36,6 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
 
-            <!-- 오른쪽: 원화 금액 -->
             <TextView
                 android:id="@+id/txtLocal"
                 android:text="+₩10,000"
@@ -52,7 +47,6 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <!-- 둘째 줄: 외화 금액 (오른쪽 정렬) -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -69,13 +63,22 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <!-- 셋째 줄: 메모 -->
+        <!--  추가된 카테고리 표시 줄 -->
         <TextView
-            android:id="@+id/txtMemo"
-            android:text="이런 내용의 메모가 있습니다."
+            android:id="@+id/txtCategory"
+            android:text="카테고리"
             android:textColor="#777"
             android:textSize="13sp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txtMemo"
+            android:text="메모 내용"
+            android:textColor="#777"
+            android:textSize="13sp"
+            android:layout_marginTop="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

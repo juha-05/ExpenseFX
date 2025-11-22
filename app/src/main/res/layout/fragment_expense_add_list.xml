@@ -9,67 +9,77 @@
     android:layout_height="match_parent"
     tools:context=".ui.expense.ExpenseListFragment">
 
-    <!--  공용 상단바 include -->
     <include
         layout="@layout/toolbar_common"
         android:id="@+id/includeToolbar" />
 
-    <!-- 날짜 / 전체선택 / 삭제 버튼 영역 -->
+    <!-- 상단 4분할 -->
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4"
         android:gravity="center_vertical"
-        android:paddingBottom="6dp"
-        android:weightSum="3">
+        android:paddingBottom="6dp">
 
-        <!-- 날짜 버튼 -->
+        <!-- 1) 날짜 -->
         <Button
             android:id="@+id/btnDate"
-            android:text="11.04 ▼"
-            android:textSize="16sp"
-            android:background="@android:color/transparent"
-            android:textColor="#000000"
+            android:layout_width="41dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:gravity="start"
+            android:paddingStart="4dp"
+            android:text="2025-11-22 ▼"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <!-- 2) 전체 선택 -->
+        <CheckBox
+            android:id="@+id/rbSelectAll"
+            android:layout_width="27dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:buttonTint="@color/black"
+            android:gravity="center"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:text="전체 선택"
+            android:textSize="14sp" />
+
+        <!-- 3) 삭제 -->
+        <Button
+            android:id="@+id/btnDelete"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="삭제"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:background="@android:color/transparent"
+            android:gravity="center" />
 
-        <!-- 우측 영역: 전체 선택 / 삭제 -->
-        <LinearLayout
-            android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_weight="2"
+        <!-- 4) 수정 -->
+        <Button
+            android:id="@+id/btnModify"
             android:layout_width="0dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="수정"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:background="@android:color/transparent"
+            android:gravity="center" />
 
-            <RadioButton
-                android:id="@+id/rbSelectAll"
-                android:text="전체 선택"
-                android:textSize="14sp"
-                android:buttonTint="@color/black"
-                android:layout_marginEnd="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/btnDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:text="삭제"
-                android:textColor="#000000"
-                android:textSize="14sp" />
-        </LinearLayout>
     </LinearLayout>
 
-    <!-- RecyclerView: 지출 목록 -->
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:dividerHeight="8dp"
         tools:listitem="@layout/item_expense" />
 
     <!-- 새 지출 버튼 -->
