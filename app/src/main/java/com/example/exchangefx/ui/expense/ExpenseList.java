@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import android.widget.PopupMenu;
+import java.util.Currency;
 
 /**
  * ExpenseList (지출내역)
@@ -41,6 +44,10 @@ public class ExpenseList extends Fragment {
 
     private int selectedYear;
     private int selectedMonth;
+
+    // 현재 화면에 표시할 통화 (드롭다운에서 선택)
+    private String displayCurrency = "KRW";
+    private TextView tvCurrencyDropdown;
 
     private TextView tvTotalAmount;
     private TextView tvMonthYear;
@@ -68,6 +75,7 @@ public class ExpenseList extends Fragment {
                 requireActivity().onBackPressed()
         );
 
+        tvCurrencyDropdown  = v.findViewById(R.id.tv_currency_dropdown);
         tvTotalAmount      = v.findViewById(R.id.tv_total_expense_list_amount);
         tvMonthYear        = v.findViewById(R.id.tv_month_year_selector);
         btnTodayRate       = v.findViewById(R.id.btn_today_rate_list);
@@ -76,6 +84,8 @@ public class ExpenseList extends Fragment {
 
         expenseDao = AppDatabase2.getInstance(requireContext()).expenseDao2();
         fxClient   = new FrankfurterCall();
+
+        tvCurrencyDropdown.setOnClickListener(view -> showCurrencyMenu(view));
 
         // 오늘 날짜 기준 월 선택
         Calendar cal = Calendar.getInstance();
@@ -125,6 +135,26 @@ public class ExpenseList extends Fragment {
         return v;
     }
 
+    // KRW ▾ 클릭했을 때 통화 선택 팝업
+    private void showCurrencyMenu(View anchor) {
+        PopupMenu menu = new PopupMenu(requireContext(), anchor);
+        menu.getMenu().add("KRW");
+        menu.getMenu().add("USD");
+        menu.getMenu().add("JPY");
+        menu.getMenu().add("EUR");
+        menu.getMenu().add("CNY");
+
+        menu.setOnMenuItemClickListener(item -> {
+            String selected = item.getTitle().toString();
+            displayCurrency = selected;
+            tvCurrencyDropdown.setText(selected + " ▾");
+            recalcAndRender();   // 통화 바뀌면 전체 다시 계산
+            return true;
+        });
+
+        menu.show();
+    }
+
     private void updateToggleUI() {
         btnTodayRate.setSelected(useToday);
         btnTransactionRate.setSelected(!useToday);
@@ -146,58 +176,63 @@ public class ExpenseList extends Fragment {
 
             for (Expense2 e : all) {
 
-                // 날짜 파싱(YYYY. MM. DD)
-                if (e.spendDate == null || e.spendDate.length() < 10) continue;
+                // 날짜 파싱(YYYY-MM-DD 혹은 YYYY. MM. DD)
+                if (e.spendDate == null || e.spendDate.length() < 7) continue;
 
-                int year  = Integer.parseInt(e.spendDate.substring(0, 4));
-                int month = Integer.parseInt(e.spendDate.substring(6, 8));
+                int year;
+                int month;
+                try {
+                    year = Integer.parseInt(e.spendDate.substring(0, 4));
+
+                    if (e.spendDate.charAt(4) == '-') {
+                        // 예: 2025-11-23
+                        month = Integer.parseInt(e.spendDate.substring(5, 7));
+                    } else {
+                        // 예: 2025. 11. 23
+                        month = Integer.parseInt(e.spendDate.substring(6, 8));
+                    }
+                } catch (Exception ex) {
+                    continue;
+                }
 
                 if (year != selectedYear || month != selectedMonth) continue;
 
-                double mainAmount; // 리스트에 표시될 최종 금액(KRW)
-                double todayAmount = 0.0;
-                double atSpendAmount = e.targetAmount;
+                // ⬇️ 여기부터 환산 금액 계산 (선택된 통화 기준)
+                double todayAmount;
+                double atSpendAmount;
+                double mainAmount;
 
-                // ---------------------------
-                // Today 기준 금액 계산
-                // ---------------------------
                 try {
-                    if ("KRW".equalsIgnoreCase(e.baseCurrency)) {
-                        todayAmount = e.baseAmount;
-                    } else {
-                        double todayRate = fxClient.getRateWithCache(
-                                requireContext(),
-                                "latest",
-                                e.baseCurrency,
-                                "KRW"
-                        );
-                        todayAmount = e.baseAmount * todayRate;
-                    }
+                    // 오늘 환율 기준 (latest)
+                    todayAmount = convertAmount(e.baseAmount, e.baseCurrency, "latest");
+
+                    // 지출 시점 환율 기준
+                    String spendDate = (e.fxDate == null || e.fxDate.isEmpty())
+                            ? "latest"
+                            : e.fxDate;
+                    atSpendAmount = convertAmount(e.baseAmount, e.baseCurrency, spendDate);
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     continue;
                 }
 
-                // ---------------------------
-                // 선택 기준: TODAY / AT_SPEND
-                // ---------------------------
+                // 오늘/지출시점 토글에 따라 표시 금액 선택
                 mainAmount = useToday ? todayAmount : atSpendAmount;
                 total += mainAmount;
 
-                // ---------------------------
-                // 환차익/환차손 계산
-                // todayAmount - atSpendAmount
-                // ---------------------------
+                // 두 기준 차이 (같은 통화 기준에서 계산)
                 double diff = todayAmount - atSpendAmount;
                 String diffLabel = formatDiff(diff);
 
                 rows.add(new RowItem(
                         e.spendDate,
                         (e.memo != null && !e.memo.isEmpty()) ? e.memo : e.category,
-                        formatAmount(mainAmount),
+                        formatAmount(mainAmount),   // ⬅️ 아래에서 통화 기호까지 포맷
                         diffLabel
                 ));
             }
+
 
             double finalTotal = total;
             List<RowItem> finalRows = rows;
@@ -211,22 +246,59 @@ public class ExpenseList extends Fragment {
         });
     }
 
+
+    /**
+     * baseAmount / baseCurrency 를 현재 선택된 displayCurrency 기준으로 환산
+     * @param date "latest" 또는 "yyyy-MM-dd"
+     */
+    private double convertAmount(double baseAmount, String baseCurrency, String date) throws Exception {
+        if (baseCurrency == null || baseCurrency.isEmpty()) return 0.0;
+        if (displayCurrency == null || displayCurrency.isEmpty()) {
+            displayCurrency = "KRW";
+        }
+
+        // 이미 같은 통화면 그대로 사용
+        if (baseCurrency.equalsIgnoreCase(displayCurrency)) {
+            return baseAmount;
+        }
+
+        String dateParam = (date == null || date.isEmpty()) ? "latest" : date;
+
+        double rate = fxClient.getRateWithCache(
+                requireContext(),
+                dateParam,
+                baseCurrency,
+                displayCurrency
+        );
+        return baseAmount * rate;
+    }
+
+    // 선택된 통화(displayCurrency)에 맞춰 금액 포맷
     private String formatAmount(double amount) {
-        NumberFormat nf = NumberFormat.getNumberInstance(Locale.KOREA);
+        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        try {
+            nf.setCurrency(Currency.getInstance(displayCurrency));
+        } catch (Exception e) {
+            // 통화 코드가 이상하면 기본 통화 사용
+        }
         nf.setMinimumFractionDigits(0);
         nf.setMaximumFractionDigits(2);
-        return "₩ " + nf.format(amount);
+        return nf.format(amount);
     }
 
     private String formatDiff(double diff) {
         if (Math.abs(diff) < 0.005) return "";
 
-        NumberFormat nf = NumberFormat.getNumberInstance(Locale.KOREA);
-        nf.setMaximumFractionDigits(2);
+        double abs = Math.abs(diff);
+        String formatted = formatAmount(abs); // 위에서 선택 통화 기준으로 포맷
 
-        if (diff > 0) return "+ ₩ " + nf.format(diff) + " (환차익)";
-        else return "- ₩ " + nf.format(-diff) + " (환차손)";
+        if (diff > 0) {
+            return "+ " + formatted + " (환차익)";
+        } else {
+            return "- " + formatted + " (환차손)";
+        }
     }
+
 
     // ============================
     // RecyclerView 내부 클래스

@@ -84,22 +84,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
-        <!-- 여백 박스 -->
-        <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@drawable/blackborder_whitebg"
-            android:layout_width="match_parent"
-            android:layout_height="150dp">
-
-            <TextView
-                android:text="더 추가할 내용"
-                android:textColor="#000"
-                android:textSize="16sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -165,6 +165,15 @@ public class HomeFragment extends Fragment {
     }
 
 
+    /**
+     * 홈 화면 상단의 총 금액을 다시 계산
+     *
+     * TODAY   : 각 지출의 baseCurrency → "latest" 기준 KRW 환산 후 합산
+     * AT_SPEND: 각 지출의 baseCurrency → 해당 지출의 fxDate 기준 KRW 환산 후 합산
+     *
+     * DB에 저장된 targetAmount / targetCurrency 는 사용하지 않고,
+     *    항상 baseAmount + 환율로 다시 계산
+     */
     private void recalcAmounts() {
         ioExecutor.execute(() -> {
 
@@ -173,28 +182,41 @@ public class HomeFragment extends Fragment {
 
             for (Expense2 e : all) {
 
-                if (currentBasis == Basis.AT_SPEND) {
-                    total += e.targetAmount;
+                double baseAmount   = e.baseAmount;
+                String baseCurrency = e.baseCurrency;
+
+                if (baseCurrency == null || baseCurrency.trim().isEmpty()) {
                     continue;
                 }
 
-                double baseAmount = e.baseAmount;
-                String baseCurrency = e.baseCurrency;
+                double rate;
 
-                if (baseCurrency == null || baseCurrency.trim().isEmpty()) continue;
+                // KRW 자체라면 환율 1.0
+                if ("KRW".equalsIgnoreCase(baseCurrency)) {
+                    rate = 1.0;
+                } else {
+                    // 기준에 따라 사용할 환율 날짜 결정
+                    String fxDate;
+                    if (currentBasis == Basis.AT_SPEND) {
+                        // 지출 시점 환율: row 별 fxDate 사용 (없으면 latest)
+                        fxDate = (e.fxDate == null || e.fxDate.trim().isEmpty())
+                                ? "latest"
+                                : e.fxDate;
+                    } else {
+                        // TODAY: 항상 latest 기준
+                        fxDate = "latest";
+                    }
 
-                double rate = 1.0;
-
-                if (!"KRW".equalsIgnoreCase(baseCurrency)) {
                     try {
                         rate = fxRateClient.getRateWithCache(
                                 requireContext(),
-                                "latest",
+                                fxDate,
                                 baseCurrency,
                                 "KRW"
                         );
                     } catch (Exception ex) {
                         ex.printStackTrace();
+                        // 이 건은 건너뜀
                         continue;
                     }
                 }

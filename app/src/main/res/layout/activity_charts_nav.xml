@@ -34,6 +34,18 @@
         android:orientation="vertical"
         android:paddingHorizontal="16dp">
 
+        <!-- 단위 안내: 항상 원화(KRW) 기준 -->
+        <TextView
+            android:id="@+id/tv_unit_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="단위: KRW (지출 시점 환율 기준)"
+            android:textSize="12sp"
+            android:textColor="#777777"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp" />
+
         <!-- 카테고리별 / 월별 선택 -->
         <LinearLayout
             android:orientation="horizontal"
@@ -73,24 +85,18 @@
             </RadioGroup>
         </LinearLayout>
 
-        <!-- 파이 차트 이미지 -->
-        <ImageView
-            android:id="@+id/imgPieChart"
-            android:src="@drawable/pie_chart_sample"
+        <!-- 파이 차트 -->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
             android:layout_marginBottom="16dp" />
 
-        <!-- 막대 차트 이미지 -->
-        <ImageView
-            android:id="@+id/imgBarChart"
-            android:src="@drawable/bar_chart_sample"
+        <!-- 막대 차트 -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter" />
+            android:layout_height="250dp" />
     </LinearLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

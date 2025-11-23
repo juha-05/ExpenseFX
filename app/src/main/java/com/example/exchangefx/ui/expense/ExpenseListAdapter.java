@@ -16,6 +16,9 @@ import com.example.exchangefx.data.entity.Expense2;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
 
 public class ExpenseListAdapter extends RecyclerView.Adapter<ExpenseListAdapter.ViewHolder> {
 
@@ -68,8 +71,24 @@ public class ExpenseListAdapter extends RecyclerView.Adapter<ExpenseListAdapter.
         holder.txtMemo.setText(d.getMemo());
         holder.txtCategory.setText(d.category);
 
-        holder.txtLocal.setText(String.format("+₩%,.0f", d.targetAmount));
-        holder.txtForeign.setText(d.baseCurrency + " " + String.format("%,.2f", d.baseAmount));
+        // 통화 코드에 맞춰 기호 붙이기 (targetCurrency 기준, 없으면 KRW)
+        String currencyCode = (d.targetCurrency != null && !d.targetCurrency.isEmpty())
+                ? d.targetCurrency
+                : "KRW";
+
+        NumberFormat nfLocal = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        try {
+            nfLocal.setCurrency(Currency.getInstance(currencyCode));
+        } catch (Exception e) {
+            // 통화 코드 이상하면 기본 통화 그대로 사용
+        }
+        nfLocal.setMaximumFractionDigits(0);
+
+        holder.txtLocal.setText("+" + nfLocal.format(d.targetAmount));
+
+        holder.txtForeign.setText(
+                d.baseCurrency + " " + String.format(Locale.getDefault(), "%,.2f", d.baseAmount)
+        );
 
         // ------------------------------------------------
         // ✔ 체크박스 스크롤 버그 방지 (리스너 초기화 후 다시 등록)

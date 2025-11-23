@@ -46,7 +46,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
-            <!-- 우측 꺾쇠(>), 아이콘 리소스 없이 텍스트로 -->
+            <!-- 우측 꺾쇠(>) -->
             <TextView
                 android:id="@+id/tv_chevron"
                 android:layout_width="wrap_content"
@@ -131,50 +131,10 @@
         android:paddingHorizontal="8dp"
         android:paddingTop="4dp"
         app:layout_constraintTop_toBottomOf="@id/tv_section_date"
-        app:layout_constraintBottom_toTopOf="@id/box_notes"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/list_item_expense_home"/>
-
-    <!-- 하단 메모 박스(1,2,3 항목) -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/box_notes"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        app:cardUseCompatPadding="true"
-        app:cardElevation="1dp"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="12dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1. 더 추가할 기능?"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2. 최근 지출내역 3칸/5칸으로?"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3. 환율 정보툴 작게?(travelWallet 참고)"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
 
     <!-- 퀵 지출 FAB + 라벨 -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
