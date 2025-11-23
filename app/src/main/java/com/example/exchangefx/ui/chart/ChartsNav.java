@@ -8,6 +8,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.example.exchangefx.utils.FrankfurterCall;
 import java.io.IOException;
 import com.example.exchangefx.R;
@@ -228,13 +230,12 @@ public class ChartsNav extends AppCompatActivity {
         dataSet.setValueTextSize(18f);
 
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.parseColor(String.valueOf(R.color.point_blue)));
-        colors.add(Color.parseColor("6DA7F2"));
+        colors.add(ContextCompat.getColor(this, R.color.point_blue));
+        colors.add(Color.parseColor("#6DA7F2"));
         colors.add(Color.parseColor("#AAD1E7"));
         colors.add(Color.parseColor("#A0C4F2"));
         colors.add(Color.parseColor("#CEDEF2"));
         colors.add(Color.parseColor("#023373"));
-
 
         dataSet.setColors(colors);
 
