@@ -139,22 +139,22 @@ public class ChartsNav extends AppCompatActivity {
 
     // ---------------- DB에서 데이터 읽기 ----------------
 
-    void loadChartData() {
+    private void loadChartData() {
         ioExecutor.execute(() -> {
             List<Expense2> all = expenseDao.getAllExpenses();
 
-            Map<String, Double> catMap = new LinkedHashMap<>();
+            Map<String, Double> catMap   = new LinkedHashMap<>();
             Map<String, Double> monthMap = new TreeMap<>();
 
             for (Expense2 e : all) {
 
-                String baseCur   = (e.baseCurrency == null) ? "" : e.baseCurrency;
+                String baseCur   = (e.baseCurrency   == null) ? "" : e.baseCurrency;
                 String targetCur = (e.targetCurrency == null) ? "" : e.targetCurrency;
 
                 double amountKrw = 0.0;
 
                 try {
-                    // 1) targetCurrency가 이미 KRW인 경우 → targetAmount 그대로 사용
+                    // 1) targetCurrency가 KRW인 경우 → targetAmount 그대로 사용
                     if ("KRW".equalsIgnoreCase(targetCur)) {
                         amountKrw = e.targetAmount;
                     }
@@ -165,15 +165,16 @@ public class ChartsNav extends AppCompatActivity {
                     // 3) 둘 다 KRW가 아니면: baseCurrency → KRW로 다시 환산
                     else {
                         double rateToKrw = fxClient.getRateWithCache(
-                                getApplicationContext(),  // Context
-                                e.fxDate,                 // 지출 당시 환율 날짜 (null이면 latest)
-                                baseCur,                  // 저장된 외화 통화
-                                "KRW"                     // 항상 KRW로 환산
+                                getApplicationContext(),
+                                e.fxDate,   // 지출 당시 환율 날짜
+                                baseCur,
+                                "KRW"
                         );
                         amountKrw = e.baseAmount * rateToKrw;
                     }
                 } catch (IOException ex) {
-                    // 환율 불러오기 실패해도 일단 0원으로 처리 (카테고리는 남기기)
+                    // 환율 불러오기 실패해도 금액만 0원으로 처리
+                    ex.printStackTrace();
                     amountKrw = 0.0;
                 }
 
@@ -181,23 +182,34 @@ public class ChartsNav extends AppCompatActivity {
                 String category = (e.category == null || e.category.isEmpty())
                         ? "기타"
                         : e.category;
-                catMap.put(category, catMap.getOrDefault(category, 0.0) + amountKrw);
+
+                double prevCat = catMap.containsKey(category)
+                        ? catMap.get(category) : 0.0;
+                catMap.put(category, prevCat + amountKrw);
 
                 // ---------------- 월별 합계 (yyyy-MM 기준) ----------------
                 if (e.spendDate != null && e.spendDate.length() >= 7) {
-                    String ym = e.spendDate.substring(0, 7); // "yyyy-MM"
-                    monthMap.put(ym, monthMap.getOrDefault(ym, 0.0) + amountKrw);
+                    String ym = e.spendDate.substring(0, 7); // "YYYY-MM"
+                    double prevMonth = monthMap.containsKey(ym)
+                            ? monthMap.get(ym) : 0.0;
+                    monthMap.put(ym, prevMonth + amountKrw);
                 }
             }
 
-            // 계산 끝난 맵을 필드에 반영
-            sumByCategory = catMap;
-            sumByMonth = monthMap;
+            // 계산한 합계를 필드에 반영
+            sumByCategory.clear();
+            sumByCategory.putAll(catMap);
 
+            sumByMonth.clear();
+            sumByMonth.putAll(monthMap);
+
+            // UI 갱신
             runOnUiThread(() -> {
-                // 기본은 카테고리별 차트 보여주기
-                rbCategory.setChecked(true);
-                showCategoryChart();
+                if (rbCategory.isChecked()) {
+                    showCategoryChart();
+                } else {
+                    showMonthlyChart();
+                }
             });
         });
     }
@@ -225,12 +237,19 @@ public class ChartsNav extends AppCompatActivity {
         List<PieEntry> entries = new ArrayList<>();
 
         for (Map.Entry<String, Double> entry : sumByCategory.entrySet()) {
-            float value = entry.getValue().floatValue();
+            Double sum = entry.getValue();
+            float value = (sum == null) ? 0f : sum.floatValue();
+
+            // 값이 0이면 아주 작은 값으로 바꿔서
+            // 파이조각이 안 보이더라도 legend에는 항상 뜨게
+            if (value <= 0f) {
+                value = 0.0001f;
+            }
+
             entries.add(new PieEntry(value, entry.getKey()));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "");
-        // 색상은 라이브러리 기본 팔레트 사용 (별도 지정 X)
         dataSet.setSliceSpace(2f);
         dataSet.setValueTextSize(12f);
 
@@ -238,6 +257,7 @@ public class ChartsNav extends AppCompatActivity {
         pieChart.setData(data);
         pieChart.invalidate();
     }
+
 
     // ---------------- BarChart 설정 & 렌더 ----------------
 
