@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ExchangeFX</string>
+    <string name="app_name">ReFX</string>
     <string name="app_bar_title">로고/앱 이름</string>
     <string name="label_this_month_total">이번 달 총 지출</string>
     <string name="label_fx_basis">환율 기준 :</string>

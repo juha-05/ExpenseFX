@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.exchangefx"
+    namespace = "com.example.ReFX"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.exchangefx"
+        applicationId = "com.example.ReFX"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
