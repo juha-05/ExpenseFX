@@ -16,7 +16,7 @@ import com.example.ReFX.data.entity.FxRateCache;
                 Expense2.class,
                 FxRateCache.class
         },
-        version = 5,              //  버전 반드시 최신 유지
+        version = 5,              //  버전 최신 유지
         exportSchema = false
 )
 public abstract class AppDatabase2 extends RoomDatabase {

@@ -132,7 +132,7 @@ public class ChartsNav extends AppCompatActivity {
             return false;
         });
 
-        // 현재 화면이 "차트"이므로 선택된 상태로 표시
+        // 현재 화면이 차트이므로 선택된 상태로 표시
         bottomNav.setSelectedItemId(R.id.nav_charts);
     }
 

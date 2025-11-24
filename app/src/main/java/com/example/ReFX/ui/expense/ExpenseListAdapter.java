@@ -24,7 +24,7 @@ public class ExpenseListAdapter extends RecyclerView.Adapter<ExpenseListAdapter.
 
     private List<Expense2> items;
 
-    // ✔ 선택된 항목 id 저장 (삭제·수정 시 사용)
+    // 선택된 항목 id 저장 (삭제·수정 시 사용)
     private Set<Integer> selectedIds = new HashSet<>();
 
     public ExpenseListAdapter(List<Expense2> items) {
@@ -37,7 +37,7 @@ public class ExpenseListAdapter extends RecyclerView.Adapter<ExpenseListAdapter.
     }
 
     // ===================================================
-    // ✔ 전체 선택 / 전체 해제
+    // 전체 선택 / 전체 해제
     // ===================================================
     public void selectAll(boolean checked) {
         selectedIds.clear();
@@ -48,7 +48,7 @@ public class ExpenseListAdapter extends RecyclerView.Adapter<ExpenseListAdapter.
     }
 
     // ===================================================
-    // ✔ 선택된 항목 조회 (수정·삭제용)
+    // 선택된 항목 조회 (수정·삭제용)
     // ===================================================
     public Set<Integer> getSelectedIds() {
         return selectedIds;
@@ -91,7 +91,7 @@ public class ExpenseListAdapter extends RecyclerView.Adapter<ExpenseListAdapter.
         );
 
         // ------------------------------------------------
-        // ✔ 체크박스 스크롤 버그 방지 (리스너 초기화 후 다시 등록)
+        // 체크박스 스크롤 버그 방지 (리스너 초기화 후 다시 등록)
         // ------------------------------------------------
         holder.checkBox.setOnCheckedChangeListener(null);
 

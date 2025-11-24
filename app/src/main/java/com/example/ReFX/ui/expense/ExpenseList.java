@@ -196,7 +196,7 @@ public class ExpenseList extends Fragment {
 
                 if (year != selectedYear || month != selectedMonth) continue;
 
-                // ⬇️ 여기부터 환산 금액 계산 (선택된 통화 기준)
+                // 환산 금액 계산 (선택된 통화 기준)
                 double todayAmount;
                 double atSpendAmount;
                 double mainAmount;
@@ -227,7 +227,7 @@ public class ExpenseList extends Fragment {
                 rows.add(new RowItem(
                         e.spendDate,
                         (e.memo != null && !e.memo.isEmpty()) ? e.memo : e.category,
-                        formatAmount(mainAmount),   // ⬅️ 아래에서 통화 기호까지 포맷
+                        formatAmount(mainAmount),   // 아래에서 통화 기호까지 포맷
                         diffLabel
                 ));
             }

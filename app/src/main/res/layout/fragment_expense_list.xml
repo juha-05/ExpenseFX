@@ -161,4 +161,3 @@
         tools:listitem="@layout/item_expense_row" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-    <!-- ic_back_arrow 아이콘은 res/drawable에 추가 필요 -->

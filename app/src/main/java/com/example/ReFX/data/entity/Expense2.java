@@ -24,15 +24,15 @@ public class Expense2 {
     public String memo;           // 메모
 
 
-    // ✔ UI에서 선택 여부 관리용 (DB에 저장되지 않음)
+    // UI에서 선택 여부 관리용 (DB에 저장되지 않음)
     @Ignore
     public boolean isSelected = false;
 
 
-    // ✔ Room에서 사용할 기본 생성자
+    // Room에서 사용할 기본 생성자
     public Expense2() {}
 
-    // ✔ new Expense2(...) 로 생성할 때 사용하는 생성자
+    // new Expense2(...) 로 생성할 때 사용하는 생성자
     @Ignore
     public Expense2(String name,
                     String spendDate,

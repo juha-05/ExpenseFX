@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="11. 04" />
 
-    <!-- 2. 아이콘 및 지출 내역 이름 (예: 🍝 파스타 (W → €)) -->
+    <!-- 2. 아이콘 및 지출 내역 이름 (예: 파스타 (W → €)) -->
     <ImageView
         android:id="@+id/iv_icon_detail"
         android:layout_width="20dp"
@@ -66,4 +66,3 @@
         tools:text="₩20,100" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-    <!-- ic_food_pasta 등 아이콘은 res/drawable에 추가 필요 -->

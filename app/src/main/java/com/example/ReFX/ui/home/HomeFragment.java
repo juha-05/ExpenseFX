@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment {
 
 
         // ------------------------------------------
-        // ">" 버튼 → 지출 목록 화면
+        // > 버튼 → 지출 목록 화면
         // ------------------------------------------
         tvChevron.setOnClickListener(view -> {
             if (requireActivity() instanceof MainActivity) {
@@ -128,19 +128,13 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
 
-
-        // =====================================================
-        // 하단 네비게이션 + → 추가화면이 아니라 "목록부터" 시작
-        // =====================================================
         bottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
 
             if (id == R.id.nav_home) return true;
 
             if (id == R.id.nav_add) {
-                // ★ 추가 누르면 지출 목록(3장)이 먼저 떠야 한다.
                 Intent intent = new Intent(requireActivity(), ExpenseEditNav.class);
-                // open_add 전달❌ → 기본 목록부터 열림
                 startActivity(intent);
                 return true;
             }

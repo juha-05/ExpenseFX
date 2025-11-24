@@ -63,7 +63,7 @@ public class Settings extends AppCompatActivity {
             return false;
         });
 
-        // 현재 선택된 메뉴를 "설정"으로 표시
+        // 현재 선택된 메뉴를 설정으로 표시
         bottomNav.setSelectedItemId(R.id.nav_settings);
     }
 }
