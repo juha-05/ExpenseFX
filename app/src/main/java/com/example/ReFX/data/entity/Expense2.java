@@ -11,8 +11,8 @@ public class Expense2 {
     public int id;
 
     public String name;           // 지출 항목 이름
-    public String spendDate;      // YYYY-MM-DD (지출 날짜)
-    public String fxDate;         // YYYY-MM-DD (환율 적용 날짜)
+    public String spendDate;      // 지출 날짜
+    public String fxDate;         // 환율 적용 날짜
 
     public double baseAmount;     // 외화 금액
     public double targetAmount;   // 원화 환산 금액

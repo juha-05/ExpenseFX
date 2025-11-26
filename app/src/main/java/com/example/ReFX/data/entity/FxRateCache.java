@@ -11,15 +11,15 @@ public class FxRateCache {
     public long id;
 
     @NonNull
-    public String fxDate;
+    public String fxDate; //환율기준날짜
 
     @NonNull
-    public String baseCurrency;
+    public String baseCurrency; //베이스통화(달러 등)
 
     @NonNull
-    public String targetCurrency;
+    public String targetCurrency; //타겟통화(원 등)
 
-    public double rate;
+    public double rate; //환율정보 (1달러=1444.00원)
 
     public FxRateCache(@NonNull String fxDate,
                        @NonNull String baseCurrency,
