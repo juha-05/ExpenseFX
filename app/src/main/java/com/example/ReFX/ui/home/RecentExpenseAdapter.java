@@ -15,9 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * 최근 지출 5개 표시용 어댑터 (Expense2 기반)
- */
 public class RecentExpenseAdapter extends RecyclerView.Adapter<RecentExpenseAdapter.VH> {
 
     private final List<Expense2> items = new ArrayList<>();
@@ -53,19 +50,21 @@ public class RecentExpenseAdapter extends RecyclerView.Adapter<RecentExpenseAdap
     public void onBindViewHolder(@NonNull VH holder, int position) {
         Expense2 e = items.get(position);
 
-        // 제목: 메모가 있으면 메모, 없으면 카테고리
+        //  제목 우선순위: name → memo → category
         String titleText;
-        if (e.memo != null && !e.memo.isEmpty()) {
+        if (e.name != null && !e.name.trim().isEmpty()) {
+            titleText = e.name;
+        } else if (e.memo != null && !e.memo.trim().isEmpty()) {
             titleText = e.memo;
         } else {
             titleText = e.category;
         }
         holder.title.setText(titleText);
 
-        // 날짜 그대로 사용 (YYYY. MM. DD)
+        // 날짜 표시
         String dateStr = (e.spendDate != null) ? e.spendDate : "";
 
-        // 예: "2025. 11. 22 · USD 40.0"
+        // 예: "2025. 11. 22 · USD 40.00"
         String subText = String.format(
                 Locale.getDefault(),
                 "%s · %s %.2f",
