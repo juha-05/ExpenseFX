@@ -77,7 +77,7 @@ public class ChartsNav extends AppCompatActivity {
         // 하단 BottomNavigation 설정
         setupBottomNav();
 
-        // 라디오 버튼 그룹
+        // 라디오 버튼 그룹 이벤트
         RadioGroup radioGroup = findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.rbCategory) {
@@ -87,11 +87,11 @@ public class ChartsNav extends AppCompatActivity {
             }
         });
 
-        // 차트 기본 설정
+        // 차트 스타일 세팅
         setupPieChartStyle();
         setupBarChartStyle();
 
-        // DB에서 지출 내역 읽어서 차트용 데이터 준비
+        // DB에서 차트 데이터 로드
         loadChartData();
     }
 
@@ -103,7 +103,6 @@ public class ChartsNav extends AppCompatActivity {
         bottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
 
-            // 홈
             if (id == R.id.nav_home) {
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -112,18 +111,13 @@ public class ChartsNav extends AppCompatActivity {
                 return true;
             }
 
-            // 추가 (3장)
             if (id == R.id.nav_add) {
                 startActivity(new Intent(this, ExpenseEditNav.class));
                 return true;
             }
 
-            // 차트 (현재 화면)
-            if (id == R.id.nav_charts) {
-                return true;
-            }
+            if (id == R.id.nav_charts) return true;
 
-            // 설정 (5장)
             if (id == R.id.nav_settings) {
                 startActivity(new Intent(this, Settings.class));
                 return true;
@@ -132,7 +126,6 @@ public class ChartsNav extends AppCompatActivity {
             return false;
         });
 
-        // 현재 화면이 차트이므로 선택된 상태로 표시
         bottomNav.setSelectedItemId(R.id.nav_charts);
     }
 
@@ -147,7 +140,7 @@ public class ChartsNav extends AppCompatActivity {
 
             for (Expense2 e : all) {
 
-                // DB에 저장된 targetAmount(KRW 기준)를 그대로 사용
+                // DB 저장된 targetAmount(KRW)를 그대로 사용
                 double amountKrw = e.targetAmount;
                 if (Double.isNaN(amountKrw) || Double.isInfinite(amountKrw)) {
                     amountKrw = 0.0;
@@ -158,38 +151,32 @@ public class ChartsNav extends AppCompatActivity {
                         ? "기타"
                         : e.category;
 
-                double prevCat = catMap.containsKey(category)
-                        ? catMap.get(category) : 0.0;
+                double prevCat = catMap.getOrDefault(category, 0.0);
                 catMap.put(category, prevCat + amountKrw);
 
-                // ---------------- 월별 합계 (yyyy-MM 기준) ----------------
-                if (e.spendDate != null && e.spendDate.length() >= 7) {
-                    String ym = e.spendDate.substring(0, 7); // "YYYY-MM"
-                    double prevMonth = monthMap.containsKey(ym)
-                            ? monthMap.get(ym) : 0.0;
+                // ---------------- 월별 합계 (DB는 "2025. 11. 03" 형식) ----------------
+                if (e.spendDate != null && e.spendDate.length() >= 8) {
+
+                    // **핵심 수정된 부분**
+                    String ym = e.spendDate.substring(0, 8).trim();  // "2025. 11"
+
+                    double prevMonth = monthMap.getOrDefault(ym, 0.0);
                     monthMap.put(ym, prevMonth + amountKrw);
                 }
             }
 
-            // 계산한 합계를 필드에 반영
             sumByCategory.clear();
             sumByCategory.putAll(catMap);
 
             sumByMonth.clear();
             sumByMonth.putAll(monthMap);
 
-            // UI 갱신
             runOnUiThread(() -> {
-                if (rbCategory.isChecked()) {
-                    showCategoryChart();
-                } else {
-                    showMonthlyChart();
-                }
+                if (rbCategory.isChecked()) showCategoryChart();
+                else showMonthlyChart();
             });
         });
     }
-
-
 
     // ---------------- PieChart 설정 & 렌더 ----------------
 
@@ -214,11 +201,8 @@ public class ChartsNav extends AppCompatActivity {
 
         for (Map.Entry<String, Double> entry : sumByCategory.entrySet()) {
             float value = entry.getValue().floatValue();
-
-            // 0 이하인 값은 차트에서 스킵
             if (value <= 0f) continue;
-
-            entries.add(new PieEntry(value, entry.getKey()));  // 라벨 = 카테고리 이름
+            entries.add(new PieEntry(value, entry.getKey()));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "");
@@ -272,7 +256,7 @@ public class ChartsNav extends AppCompatActivity {
             if (value <= 0f) continue;
 
             entries.add(new BarEntry(index, value));
-            labels.add(formatMonthLabel(entry.getKey())); // "yyyy-MM" -> "yy.MM"
+            labels.add(formatMonthLabel(entry.getKey()));  // "2025. 11" → "25.11"
             index++;
         }
 
@@ -292,10 +276,10 @@ public class ChartsNav extends AppCompatActivity {
     }
 
     private String formatMonthLabel(String ym) {
-        // "2025-11" -> "25.11"
+        // ym = "2025. 11" → "25.11"
         try {
             String year = ym.substring(2, 4);
-            String month = ym.substring(5, 7);
+            String month = ym.substring(6, 8);
             return String.format(Locale.getDefault(), "%s.%s", year, month);
         } catch (Exception e) {
             return ym;
